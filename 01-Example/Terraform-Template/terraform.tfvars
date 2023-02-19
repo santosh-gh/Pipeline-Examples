@@ -1,7 +1,7 @@
 
 # Deployment Config
 
-resourcegroup_name = "MyRG"
+resourcegroup_name = "MyRG000"
 
 location = "southindia"
 
