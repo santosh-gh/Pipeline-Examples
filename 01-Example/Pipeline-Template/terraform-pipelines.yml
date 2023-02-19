@@ -9,10 +9,11 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  bk-connection: ''
-  bk-storage: ''
-  bk-container: ''
-  bk-key: ''
+  bk-service-connection: 'pipeline-example-connection'
+  bk-rg: 'MyRG'
+  bk-storage: 'mystg000'
+  bk-container: 'mycontainer000'
+  bk-key: 'terraform.tfstate'
 
 stages:
   - stage: tfvalidate
@@ -20,7 +21,20 @@ stages:
       - job: validate
         continueOnError: false
         steps: 
-        
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+          
+          - task: TerraformTaskV4@4
+            displayName: init
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm:  $(bk-service-connection)
+              backendAzureRmResourceGroupName: $(bk-rg)
+              backendAzureRmStorageAccountName: $(bk-storage)
+              backendAzureRmContainerName: $(bk-container)
+              backendAzureRmKey: $(bk-key)
 
 
 
