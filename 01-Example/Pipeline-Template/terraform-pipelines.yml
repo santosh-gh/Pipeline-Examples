@@ -34,12 +34,15 @@ stages:
               backendAzureRmResourceGroupName: '$(bk-rg)'
               backendAzureRmStorageAccountName: '$(bk-storage)'
               backendAzureRmContainerName: '$(bk-container)'
-              backendAzureRmKey: '$(bk-key)'          
+              backendAzureRmKey: '$(bk-key)'   
+              workingDirectory: '$(System.DefaultWorkingDirectory)/01-Example/Terraform-Template'    
+
           - task: TerraformTaskV4@4
             displayName: validate
             inputs:
               provider: 'azurerm'
               command: 'validate'
+
   - stage: tfdeploy
     condition: succeeded('tfvalidate')
     dependsOn: tfvalidate
@@ -59,13 +62,15 @@ stages:
               backendAzureRmResourceGroupName: '$(bk-rg)'
               backendAzureRmStorageAccountName: '$(bk-storage)'
               backendAzureRmContainerName: '$(bk-container)'
-              backendAzureRmKey: '$(bk-key)'  
+              backendAzureRmKey: '$(bk-key)' 
+
           - task: TerraformTaskV4@4
             displayName: plan
             inputs:
               provider: 'azurerm'
               command: 'plan'
               environmentServiceNameAzureRM: '$(bk-service-connection)'
+
           - task: TerraformTaskV4@4
             displayName: deploy
             inputs:
