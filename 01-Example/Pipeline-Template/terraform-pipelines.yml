@@ -34,8 +34,43 @@ stages:
               backendAzureRmResourceGroupName: '$(bk-rg)'
               backendAzureRmStorageAccountName: '$(bk-storage)'
               backendAzureRmContainerName: '$(bk-container)'
-              backendAzureRmKey: '$(bk-key)'
-
-
+              backendAzureRmKey: '$(bk-key)'          
+          - task: TerraformTaskV4@4
+            displayName: validate
+            inputs:
+              provider: 'azurerm'
+              command: 'validate'
+  - stage: tfdeploy
+    condition: succeeded(tfvalidate)
+    dependsOn: tfvalidate
+    jobs:
+      - job: apply
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+          
+          - task: TerraformTaskV4@4
+            displayName: init
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm:  '$(bk-service-connection)'
+              backendAzureRmResourceGroupName: '$(bk-rg)'
+              backendAzureRmStorageAccountName: '$(bk-storage)'
+              backendAzureRmContainerName: '$(bk-container)'
+              backendAzureRmKey: '$(bk-key)'  
+          - task: TerraformTaskV4@4
+            displayeName: plan
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: '$(bk-service-connection)'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: '$(bk-service-connection)'
+     
 
 
