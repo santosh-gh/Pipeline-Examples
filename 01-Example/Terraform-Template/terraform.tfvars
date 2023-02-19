@@ -10,7 +10,7 @@ tags = {
   "Owner"       = "Santosh"
 }
 
-vnet_name = "MyVnet"
+vnet_name = "MyVnet000"
 
 vnet_address_space = ["10.211.0.0/16"]
 
