@@ -61,12 +61,13 @@ stages:
               backendAzureRmContainerName: '$(bk-container)'
               backendAzureRmKey: '$(bk-key)'  
           - task: TerraformTaskV4@4
-            displayeName: plan
+            displayName: plan
             inputs:
               provider: 'azurerm'
               command: 'plan'
               environmentServiceNameAzureRM: '$(bk-service-connection)'
           - task: TerraformTaskV4@4
+            displayName: deploy
             inputs:
               provider: 'azurerm'
               command: 'apply'
