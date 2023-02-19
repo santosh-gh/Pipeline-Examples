@@ -71,6 +71,3 @@ stages:
               provider: 'azurerm'
               command: 'apply'
               environmentServiceNameAzureRM: '$(bk-service-connection)'
-     
-
-
