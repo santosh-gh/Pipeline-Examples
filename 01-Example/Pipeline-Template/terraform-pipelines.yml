@@ -35,14 +35,14 @@ stages:
               backendAzureRmStorageAccountName: '$(bk-storage)'
               backendAzureRmContainerName: '$(bk-container)'
               backendAzureRmKey: '$(bk-key)'   
-              workingDirectory: '$(System.DefaultWorkingDirectory)/Pipeline-Example/01-Example/Terraform-Template'    
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Pipeline-Examples/01-Example/Terraform-Template'    
 
           - task: TerraformTaskV4@4
             displayName: validate
             inputs:
               provider: 'azurerm'
               command: 'validate'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/Pipeline-Example/01-Example/Terraform-Template'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Pipeline-Examples/01-Example/Terraform-Template'
 
   - stage: tfdeploy
     condition: succeeded('tfvalidate')
@@ -64,7 +64,7 @@ stages:
               backendAzureRmStorageAccountName: '$(bk-storage)'
               backendAzureRmContainerName: '$(bk-container)'
               backendAzureRmKey: '$(bk-key)' 
-              workingDirectory: '$(System.DefaultWorkingDirectory)/Pipeline-Example/01-Example/Terraform-Template'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Pipeline-Examples/01-Example/Terraform-Template'
 
           - task: TerraformTaskV4@4
             displayName: plan
@@ -72,7 +72,7 @@ stages:
               provider: 'azurerm'
               command: 'plan'
               environmentServiceNameAzureRM: '$(bk-service-connection)'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/Pipeline-Example/01-Example/Terraform-Template'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Pipeline-Examples/01-Example/Terraform-Template'
 
           - task: TerraformTaskV4@4
             displayName: deploy
@@ -80,4 +80,4 @@ stages:
               provider: 'azurerm'
               command: 'apply'
               environmentServiceNameAzureRM: '$(bk-service-connection)'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/Pipeline-Example/01-Example/Terraform-Template'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Pipeline-Examples/01-Example/Terraform-Template'
