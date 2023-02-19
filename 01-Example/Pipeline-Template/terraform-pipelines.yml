@@ -30,11 +30,11 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              backendServiceArm:  $(bk-service-connection)
-              backendAzureRmResourceGroupName: $(bk-rg)
-              backendAzureRmStorageAccountName: $(bk-storage)
-              backendAzureRmContainerName: $(bk-container)
-              backendAzureRmKey: $(bk-key)
+              backendServiceArm:  '$(bk-service-connection)'
+              backendAzureRmResourceGroupName: '$(bk-rg)'
+              backendAzureRmStorageAccountName: '$(bk-storage)'
+              backendAzureRmContainerName: '$(bk-container)'
+              backendAzureRmKey: '$(bk-key)'
 
 
 
